@@ -23,7 +23,15 @@ import relay
 client = relay.Client('your_api_key...')
 
 # Publish a message to subscribers over the nav channel
-client.publish('nav', {'inbox': 2})
+client.publish(
+    ['global'],
+    {
+        'action': 'nav_update',
+        'payload': {
+            'inbox_unread': 2
+        }
+    }
+)
 
 # Close a subscriber with the user Id burt
 client.close('burt')
