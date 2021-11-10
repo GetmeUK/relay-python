@@ -94,9 +94,9 @@ class Client:
         # Update the rate limit
         if 'X-Relay-RateLimit-Limit' in r.headers:
             self._rate_limit = int(r.headers['X-Relay-RateLimit-Limit'])
-            self._rate_limit_reset = float(r.headers['X-Relay-Relay-Reset'])
+            self._rate_limit_reset = float(r.headers['X-Relay-RateLimit-Reset'])
             self._rate_limit_remaining \
-                    = int(r.headers['X-Relay-Relay-Remaining'])
+                    = int(r.headers['X-Relay-RateLimit-Remaining'])
 
         # Handle a successful response
         if r.status_code in [200, 204]:
@@ -118,3 +118,6 @@ class Client:
             error.get('hint'),
             error.get('arg_errors')
         )
+
+    def encode(self, v):
+        return self._encoder(v)
